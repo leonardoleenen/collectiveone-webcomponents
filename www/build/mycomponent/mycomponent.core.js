@@ -1559,4 +1559,4 @@ const initHostElement = (plt, cmpMeta, HostElementConstructor, hydratedCssClass,
   // but note that the components have not fully loaded yet
   App.initialized = true;
 })(n, x, w, d, r, h, c);
-})(window,document,{},"mycomponent","hydrated",[["my-component","my-component",1,[["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2]],1]]);
+})(window,document,{},"mycomponent","hydrated",[["co-notification-item","co-notification-item",1,[["author",1,0,1,2],["avatarURL",1,0,"avatar-u-r-l",2],["content",1,0,1,2],["date",1,0,1,2],["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2],["status",1,0,1,2],["title",1,0,1,2],["url",1,0,1,2]]],["my-component","my-component",1,[["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2]],1]]);

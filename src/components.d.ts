@@ -12,6 +12,49 @@ import '@stencil/core';
 
 export namespace Components {
 
+  interface CoNotificationItem {
+    'author': string;
+    'avatarURL': string;
+    'content': string;
+    'date': string;
+    /**
+    * The first name
+    */
+    'first': string;
+    /**
+    * The last name
+    */
+    'last': string;
+    /**
+    * The middle name
+    */
+    'middle': string;
+    'status': string;
+    'title': string;
+    'url': string;
+  }
+  interface CoNotificationItemAttributes extends StencilHTMLAttributes {
+    'author'?: string;
+    'avatarURL'?: string;
+    'content'?: string;
+    'date'?: string;
+    /**
+    * The first name
+    */
+    'first'?: string;
+    /**
+    * The last name
+    */
+    'last'?: string;
+    /**
+    * The middle name
+    */
+    'middle'?: string;
+    'status'?: string;
+    'title'?: string;
+    'url'?: string;
+  }
+
   interface MyComponent {
     /**
     * The first name
@@ -44,13 +87,21 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
+    'CoNotificationItem': Components.CoNotificationItem;
     'MyComponent': Components.MyComponent;
   }
 
   interface StencilIntrinsicElements {
+    'co-notification-item': Components.CoNotificationItemAttributes;
     'my-component': Components.MyComponentAttributes;
   }
 
+
+  interface HTMLCoNotificationItemElement extends Components.CoNotificationItem, HTMLStencilElement {}
+  var HTMLCoNotificationItemElement: {
+    prototype: HTMLCoNotificationItemElement;
+    new (): HTMLCoNotificationItemElement;
+  };
 
   interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {}
   var HTMLMyComponentElement: {
@@ -59,10 +110,12 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
+    'co-notification-item': HTMLCoNotificationItemElement
     'my-component': HTMLMyComponentElement
   }
 
   interface ElementTagNameMap {
+    'co-notification-item': HTMLCoNotificationItemElement;
     'my-component': HTMLMyComponentElement;
   }
 

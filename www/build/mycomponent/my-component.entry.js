@@ -13,7 +13,9 @@ class MyComponent {
     render() {
         return h("div", null,
             "Hello, World! I'm ",
-            this.getText());
+            this.getText(),
+            " ",
+            this.first);
     }
     static get is() { return "my-component"; }
     static get encapsulation() { return "shadow"; }

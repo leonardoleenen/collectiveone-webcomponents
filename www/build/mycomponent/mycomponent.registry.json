@@ -5,6 +5,11 @@
   "corePolyfilled": "es5-build-disabled.js",
   "core": "mycomponent.core.js",
   "components": {
+    "co-notification-item": {
+      "bundleIds": {
+        "$": "co-notification-item"
+      }
+    },
     "my-component": {
       "bundleIds": {
         "$": "my-component"
