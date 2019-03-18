@@ -113,6 +113,8 @@ const toLowerCase = str => str.toLowerCase();
 
 const dashToPascalCase = str => toLowerCase(str).split('-').map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join('');
 
+const noop = () => {};
+
 const updateAttribute = (elm, memberName, newValue, isBooleanAttr = 'boolean' === typeof newValue, isXlinkNs) => {
   isXlinkNs = memberName !== (memberName = memberName.replace(/^xlink\:?/, '')), null == newValue || isBooleanAttr && (!newValue || 'false' === newValue) ? isXlinkNs ? elm.removeAttributeNS(XLINK_NS$1, toLowerCase(memberName)) : elm.removeAttribute(memberName) : 'function' !== typeof newValue && (newValue = isBooleanAttr ? '' : newValue.toString(), 
   isXlinkNs ? elm.setAttributeNS(XLINK_NS$1, toLowerCase(memberName), newValue) : elm.setAttribute(memberName, newValue));
@@ -975,9 +977,9 @@ const update = async (plt, elm, perf, isInitialLoad, instance, ancestorHostEleme
 };
 
 const defineMember = (plt, property, elm, instance, memberName, hostSnapshot, perf, hostAttributes, hostAttrValue) => {
-  if (property.type || false) {
+  if (property.type || property.state) {
     const values = plt.valuesMap.get(elm);
-    !property.attr || void 0 !== values[memberName] && '' !== values[memberName] || 
+    !property.state && true && (!property.attr || void 0 !== values[memberName] && '' !== values[memberName] || 
     // check the prop value from the host element attribute
     (hostAttributes = hostSnapshot && hostSnapshot.$attributes) && isDef(hostAttrValue = hostAttributes[property.attr]) && (
     // looks like we've got an attribute value
@@ -998,7 +1000,7 @@ const defineMember = (plt, property, elm, instance, memberName, hostSnapshot, pe
     // for the client only, let's delete its "own" property
     // this way our already assigned getter/setter on the prototype kicks in
     // the very special case is to NOT do this for "mode"
-    'mode' !== memberName && delete elm[memberName]), instance.hasOwnProperty(memberName) && void 0 === values[memberName] && (
+    'mode' !== memberName && delete elm[memberName])), instance.hasOwnProperty(memberName) && void 0 === values[memberName] && (
     // @Prop() or @Prop({mutable:true}) or @State()
     // we haven't yet got a value from the above checks so let's
     // read any "own" property instance values already set
@@ -1013,9 +1015,13 @@ const defineMember = (plt, property, elm, instance, memberName, hostSnapshot, pe
       return values = plt.valuesMap.get(plt.hostElementMap.get(this)), values && values[memberName];
     }, function setComponentProp(newValue, elm) {
       // component instance prop/state setter (cannot be arrow fn)
-      elm = plt.hostElementMap.get(this), elm && (property.mutable ? setValue(plt, elm, memberName, newValue, perf) : console.warn(`@Prop() "${memberName}" on "${elm.tagName}" cannot be modified.`));
+      elm = plt.hostElementMap.get(this), elm && (property.state || property.mutable ? setValue(plt, elm, memberName, newValue, perf) : console.warn(`@Prop() "${memberName}" on "${elm.tagName}" cannot be modified.`));
     });
-  } else false;
+  } else property.method && 
+  // @Method()
+  // add a property "value" on the host element
+  // which we'll bind to the instance's method
+  definePropertyValue(elm, memberName, instance[memberName].bind(instance));
 };
 
 const setValue = (plt, elm, memberName, newVal, perf, instance, values) => {
@@ -1034,6 +1040,14 @@ const setValue = (plt, elm, memberName, newVal, perf, instance, values) => {
   // queue that we need to do an update, but don't worry about queuing
   // up millions cuz this function ensures it only runs once
   queueUpdate(plt, elm, perf));
+};
+
+const definePropertyValue = (obj, propertyKey, value) => {
+  // minification shortcut
+  Object.defineProperty(obj, propertyKey, {
+    configurable: true,
+    value
+  });
 };
 
 const definePropertyGetterSetter = (obj, propertyKey, get, set) => {
@@ -1165,7 +1179,7 @@ const proxyHostElementPrototype = (plt, membersEntries, hostPrototype, perf) => 
   membersEntries.forEach(([memberName, member]) => {
     // add getters/setters
     const memberType = member.memberType;
-    3 /* PropMutable */ & memberType && true && 
+    3 /* PropMutable */ & memberType && true ? 
     // @Prop() or @Prop({ mutable: true })
     definePropertyGetterSetter(hostPrototype, memberName, function getHostElementProp() {
       // host element getter (cannot be arrow fn)
@@ -1174,7 +1188,11 @@ const proxyHostElementPrototype = (plt, membersEntries, hostPrototype, perf) => 
     }, function setHostElementProp(newValue) {
       // host element setter (cannot be arrow fn)
       setValue(plt, this, memberName, parsePropertyValue(member.propType, newValue), perf);
-    });
+    }) : 32 /* Method */ === memberType && 
+    // @Method()
+    // add a placeholder noop value on the host element's prototype
+    // incase this method gets called before setup
+    definePropertyValue(hostPrototype, memberName, noop);
   });
 };
 
@@ -1559,4 +1577,4 @@ const initHostElement = (plt, cmpMeta, HostElementConstructor, hydratedCssClass,
   // but note that the components have not fully loaded yet
   App.initialized = true;
 })(n, x, w, d, r, h, c);
-})(window,document,{},"mycomponent","hydrated",[["co-notification-item","co-notification-item",1,[["author",1,0,1,2],["avatarURL",1,0,"avatar-u-r-l",2],["content",1,0,1,2],["date",1,0,1,2],["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2],["status",1,0,1,2],["title",1,0,1,2],["url",1,0,1,2]]],["my-component","my-component",1,[["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2]],1]]);
+})(window,document,{},"mycomponent","hydrated",[["co-context-resume","co-context-resume",1,[["fav",1,0,1,2],["favorite",16],["summary",1,0,1,2],["title",1,0,1,2],["unFavoriteHandle",32],["url",1,0,1,2]]],["co-heading-h1","co-heading-h1",1,[["title",1,0,1,2]]],["co-heading-h2","co-heading-h2",1,[["title",1,0,1,2]]],["co-heading-h3","co-heading-h3",1,[["title",1,0,1,2]]],["co-maru","co-maru",1,[["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2],["nombre",1,0,1,2]]],["co-notification-item","co-notification-item",1,[["author",1,0,1,2],["avatarURL",1,0,"avatar-u-r-l",2],["content",1,0,1,2],["date",1,0,1,2],["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2],["status",1,0,1,2],["title",1,0,1,2],["url",1,0,1,2]]],["my-component","my-component",1,[["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2]],1]]);

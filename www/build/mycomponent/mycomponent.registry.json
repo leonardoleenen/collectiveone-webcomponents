@@ -5,6 +5,31 @@
   "corePolyfilled": "es5-build-disabled.js",
   "core": "mycomponent.core.js",
   "components": {
+    "co-context-resume": {
+      "bundleIds": {
+        "$": "co-context-resume"
+      }
+    },
+    "co-heading-h1": {
+      "bundleIds": {
+        "$": "co-heading-h1"
+      }
+    },
+    "co-heading-h2": {
+      "bundleIds": {
+        "$": "co-heading-h2"
+      }
+    },
+    "co-heading-h3": {
+      "bundleIds": {
+        "$": "co-heading-h3"
+      }
+    },
+    "co-maru": {
+      "bundleIds": {
+        "$": "co-maru"
+      }
+    },
     "co-notification-item": {
       "bundleIds": {
         "$": "co-notification-item"

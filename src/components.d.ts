@@ -12,6 +12,72 @@ import '@stencil/core';
 
 export namespace Components {
 
+  interface CoContextResume {
+    'fav': string;
+    'summary': string;
+    'title': string;
+    'unFavoriteHandle': () => void;
+    'url': string;
+  }
+  interface CoContextResumeAttributes extends StencilHTMLAttributes {
+    'fav'?: string;
+    'summary'?: string;
+    'title'?: string;
+    'url'?: string;
+  }
+
+  interface CoHeadingH1 {
+    'title': string;
+  }
+  interface CoHeadingH1Attributes extends StencilHTMLAttributes {
+    'title'?: string;
+  }
+
+  interface CoHeadingH2 {
+    'title': string;
+  }
+  interface CoHeadingH2Attributes extends StencilHTMLAttributes {
+    'title'?: string;
+  }
+
+  interface CoHeadingH3 {
+    'title': string;
+  }
+  interface CoHeadingH3Attributes extends StencilHTMLAttributes {
+    'title'?: string;
+  }
+
+  interface CoMaru {
+    /**
+    * The first name
+    */
+    'first': string;
+    /**
+    * The last name
+    */
+    'last': string;
+    /**
+    * The middle name
+    */
+    'middle': string;
+    'nombre': string;
+  }
+  interface CoMaruAttributes extends StencilHTMLAttributes {
+    /**
+    * The first name
+    */
+    'first'?: string;
+    /**
+    * The last name
+    */
+    'last'?: string;
+    /**
+    * The middle name
+    */
+    'middle'?: string;
+    'nombre'?: string;
+  }
+
   interface CoNotificationItem {
     'author': string;
     'avatarURL': string;
@@ -87,15 +153,55 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
+    'CoContextResume': Components.CoContextResume;
+    'CoHeadingH1': Components.CoHeadingH1;
+    'CoHeadingH2': Components.CoHeadingH2;
+    'CoHeadingH3': Components.CoHeadingH3;
+    'CoMaru': Components.CoMaru;
     'CoNotificationItem': Components.CoNotificationItem;
     'MyComponent': Components.MyComponent;
   }
 
   interface StencilIntrinsicElements {
+    'co-context-resume': Components.CoContextResumeAttributes;
+    'co-heading-h1': Components.CoHeadingH1Attributes;
+    'co-heading-h2': Components.CoHeadingH2Attributes;
+    'co-heading-h3': Components.CoHeadingH3Attributes;
+    'co-maru': Components.CoMaruAttributes;
     'co-notification-item': Components.CoNotificationItemAttributes;
     'my-component': Components.MyComponentAttributes;
   }
 
+
+  interface HTMLCoContextResumeElement extends Components.CoContextResume, HTMLStencilElement {}
+  var HTMLCoContextResumeElement: {
+    prototype: HTMLCoContextResumeElement;
+    new (): HTMLCoContextResumeElement;
+  };
+
+  interface HTMLCoHeadingH1Element extends Components.CoHeadingH1, HTMLStencilElement {}
+  var HTMLCoHeadingH1Element: {
+    prototype: HTMLCoHeadingH1Element;
+    new (): HTMLCoHeadingH1Element;
+  };
+
+  interface HTMLCoHeadingH2Element extends Components.CoHeadingH2, HTMLStencilElement {}
+  var HTMLCoHeadingH2Element: {
+    prototype: HTMLCoHeadingH2Element;
+    new (): HTMLCoHeadingH2Element;
+  };
+
+  interface HTMLCoHeadingH3Element extends Components.CoHeadingH3, HTMLStencilElement {}
+  var HTMLCoHeadingH3Element: {
+    prototype: HTMLCoHeadingH3Element;
+    new (): HTMLCoHeadingH3Element;
+  };
+
+  interface HTMLCoMaruElement extends Components.CoMaru, HTMLStencilElement {}
+  var HTMLCoMaruElement: {
+    prototype: HTMLCoMaruElement;
+    new (): HTMLCoMaruElement;
+  };
 
   interface HTMLCoNotificationItemElement extends Components.CoNotificationItem, HTMLStencilElement {}
   var HTMLCoNotificationItemElement: {
@@ -110,11 +216,21 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
+    'co-context-resume': HTMLCoContextResumeElement
+    'co-heading-h1': HTMLCoHeadingH1Element
+    'co-heading-h2': HTMLCoHeadingH2Element
+    'co-heading-h3': HTMLCoHeadingH3Element
+    'co-maru': HTMLCoMaruElement
     'co-notification-item': HTMLCoNotificationItemElement
     'my-component': HTMLMyComponentElement
   }
 
   interface ElementTagNameMap {
+    'co-context-resume': HTMLCoContextResumeElement;
+    'co-heading-h1': HTMLCoHeadingH1Element;
+    'co-heading-h2': HTMLCoHeadingH2Element;
+    'co-heading-h3': HTMLCoHeadingH3Element;
+    'co-maru': HTMLCoMaruElement;
     'co-notification-item': HTMLCoNotificationItemElement;
     'my-component': HTMLMyComponentElement;
   }
